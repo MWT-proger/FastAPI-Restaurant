@@ -14,12 +14,12 @@ class Postgres:
     DATABASE: str = os.getenv("DB_NAME")
 
 
-
 class Settings(BaseSettings):
     DEBUG: bool = (os.getenv('DEBUG', 'False') == 'True')
     BASE_URL: str = ""
     PROJECT_NAME: str = os.getenv("SERVER_NAME", "ugc_service")
     POSTGRES: Postgres = Postgres()
+
 
 get_settings = Settings()
 

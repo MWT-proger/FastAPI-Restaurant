@@ -26,6 +26,8 @@ services:
     command: ["python", "main.py"]
     ports:
       - "${APP_PORT}:6000"
+    volumes:
+      - "../app:/usr/app:rw"
     environment:
       - SERVER_NAME=appRestaurant
       - DEBUG=${APP_DEBUG}

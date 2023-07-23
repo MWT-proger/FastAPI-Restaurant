@@ -12,10 +12,12 @@ def orjson_dumps(v, *, default):
 class BaseSchema(BaseModel):
 
     class Config:
-        json_loads = orjson.loads
-        json_dumps = orjson_dumps
-        orm_mode = True
+        from_attributes = True
 
 
 class BaseUUIDSchema(BaseSchema):
     id: Union[str, UUID]
+
+
+class BaseResponse(BaseSchema):
+    pass
