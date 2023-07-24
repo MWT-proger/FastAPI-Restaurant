@@ -1,7 +1,10 @@
-db_up:
+up_build:
+	docker-compose --env-file .env  up --build
+
+up:
 	docker-compose --env-file .env  up
 
-db_build:
+build:
 	docker-compose --env-file .env  build
 
 db_generate:
