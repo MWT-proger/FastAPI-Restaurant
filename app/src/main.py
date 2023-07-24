@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
-from api.v1.resources import menu, submenu, dish
+from api.v1 import menu, submenu, dish
 from core.config import get_settings as settings
 
 app = FastAPI(

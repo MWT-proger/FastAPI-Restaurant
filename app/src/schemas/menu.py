@@ -1,25 +1,17 @@
-import uuid
 
-from schemas import BaseSchema, BaseResponse
+from schemas.base import BaseMenu, BaseSchema
 
 
 class MenuSchema(BaseSchema):
-    id: uuid.UUID
-    title: str
-    description: str
-    submenus_count: int = 0
-    dishes_count: int = 0
+   pass
 
-
-class MenuResponse(BaseResponse):
+class MenuResponse(BaseMenu):
     pass
 
 
-class CreateMenuSchema(MenuSchema):
-    title: str
-    description: str
+class MenuCreate(MenuSchema):
+    pass
 
 
-class UpdateMenuSchema(MenuSchema):
-    title: str
-    description: str
+class MenuUpdate(MenuSchema):
+    pass

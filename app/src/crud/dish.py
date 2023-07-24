@@ -2,20 +2,15 @@ import uuid
 
 from sqlalchemy import select
 
-from api.v1.schemas.dish import DishSchema
+from schemas.dish import DishSchema
 from models.dish import Dish
-from repositories.base import AbstractRepository
+from crud.base import CRUDBase
 
 
-class DishRepository(AbstractRepository):
+class CRUDDish(CRUDBase):
     model: type[Dish] = Dish
 
     async def list(self, submenu_id: uuid.UUID) -> list[Dish]:
-        """Возвращает список всех записей блюд из базы данных по связанному с
-        ними `id` подменю.
-
-        :param submenu_id: Идентификатор подменю.
-        """
         statement = select(
             self.model.id,
             self.model.title,
@@ -32,10 +27,7 @@ class DishRepository(AbstractRepository):
         return dish
 
     async def get(self, dish_id: uuid.UUID) -> Dish | None:
-        """Возвращает модель блюда из базы данных по его `id`.
 
-        :param dish_id: Идентификатор блюда.
-        """
         statement = select(
             self.model.id,
             self.model.title,
@@ -63,11 +55,7 @@ class DishRepository(AbstractRepository):
         return dish
 
     async def add(self, dish_content: DishSchema, submenu_id: uuid.UUID) -> Dish | None:
-        """Добавляет в базу данных новую запись блюда.
 
-        :param dish_content: Поля для добавления.
-        :param submenu_id: Идентификатор подменю.
-        """
         new_dish = dish_content.dict(exclude_unset=True)
         new_dish["submenu_id"] = submenu_id
         dish: Dish = Dish(**new_dish)
@@ -83,11 +71,7 @@ class DishRepository(AbstractRepository):
         return dish
 
     async def update(self, dish_id: uuid.UUID, dish_content: DishSchema) -> bool:
-        """Обновляет запись блюда в базе данных.
 
-        :param dish_id: Идентификатор блюда.
-        :param dish_content: Поля блюда, которые необходимо обновить.
-        """
         dish_status = False
         if dish := await self.__get(dish_id=dish_id):
             updated_dish = dish_content.dict(exclude_unset=True)
@@ -104,10 +88,7 @@ class DishRepository(AbstractRepository):
         return dish_status
 
     async def delete(self, dish_id: uuid.UUID) -> bool:
-        """Удаляет запись блюда из базы данных.
 
-        :param dish_id: Идентификатор блюда.
-        """
         dish_status = False
         if dish := await self.__get(dish_id=dish_id):
             async with self.session as session:
